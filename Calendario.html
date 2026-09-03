@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; text-align: center; color: #333;}
+      h3 { margin-top: 0; }
+      input[type="date"] { padding: 10px; font-size: 16px; margin-bottom: 25px; border: 1px solid #ccc; border-radius: 5px; width: 80%; cursor: pointer;}
+      button { padding: 12px 24px; background-color: #1a73e8; color: white; border: none; font-size: 14px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s;}
+      button:hover { background-color: #1557b0; }
+      #loader { display: none; margin-top: 15px; font-size: 14px; color: #555; }
+    </style>
+  </head>
+  <body>
+    <h3>Selecciona la fecha</h3>
+    <!-- Este es el calendario nativo del navegador -->
+    <input type="date" id="fechaPicker">
+    <br>
+    <button id="btnGenerar" onclick="enviarFecha()">🚀 Generar Cargue</button>
+    <div id="loader">Procesando información, por favor espera...</div>
+
+    <script>
+      function enviarFecha() {
+        var fecha = document.getElementById('fechaPicker').value;
+        if(!fecha) {
+          alert("❌ Por favor selecciona una fecha del calendario.");
+          return;
+        }
+        
+        // Mostrar estado de carga y bloquear botón
+        document.getElementById('btnGenerar').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+
+        // Enviar la fecha (Formato YYYY-MM-DD) al script principal
+        google.script.run
+          .withSuccessHandler(function() { google.script.host.close(); }) // Cierra el pop-up al terminar
+          .generarCargueNovasoft(fecha);
+      }
+    </script>
+  </body>
+</html>
